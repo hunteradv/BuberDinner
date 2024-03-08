@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ErrorOr;
 using BuberDinner.Application.Common.Interfaces.Authentication;
 using BuberDinner.Application.Common.Interfaces.Persistence;
-using BuberDinner.Domain;
+using BuberDinner.Domain.Entities;
+using BuberDinner.Domain.Common.Errors;
 
 namespace BuberDinner.Application.Services
 {
@@ -20,12 +17,12 @@ namespace BuberDinner.Application.Services
             _userRepository = userRepository;
         }
 
-        public AuthenticationResult Register(string firstName, string lastName, string email, string password)
+        public ErrorOr<AuthenticationResult> Register(string firstName, string lastName, string email, string password)
         {
             //Verifica se usuário não existe
             if (_userRepository.GetUserByEmail(email) is not null)
             {
-                throw new Exception("E-mail já cadastrado para um usuário");
+                return Errors.User.DuplicateEmail;
             }
             
             //Cria usuário e persiste no db
@@ -38,18 +35,18 @@ namespace BuberDinner.Application.Services
             return new AuthenticationResult(user, token);
         }
 
-        public AuthenticationResult Login(string email, string password)
+        public ErrorOr<AuthenticationResult> Login(string email, string password)
         {
             //1. Valida se usuário existe
             if (_userRepository.GetUserByEmail(email) is not User user)
             {
-                throw new Exception("Não existe usuário para este e-mail");
+                return Errors.Authentication.InvalidCredentials;
             }
             
             //2. Valida se senha está correta
             if (user.Password != password)
             {
-                throw new Exception("Senha inválida");
+                return Errors.Authentication.InvalidCredentials;
             }
 
             //3. Cria JWT Token
