@@ -14,4 +14,8 @@
     <PackageReference Include="ErrorOr" Version="1.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Host\" />
+  </ItemGroup>
+
 </Project>
