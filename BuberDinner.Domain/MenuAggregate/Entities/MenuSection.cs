@@ -17,7 +17,7 @@ namespace BuberDinner.Domain.Menu.Entities
 
         public IReadOnlyList<MenuItem> Items => _items.AsReadOnly();
 
-        public static MenuSection Create(string name, string description)
+        public static MenuSection Create(string name, string description, IEnumerable<MenuItem> menuItems)
         {
             return new MenuSection(MenuSectionId.CreateUnique(), name, description);
         }

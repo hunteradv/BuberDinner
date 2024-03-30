@@ -10,18 +10,25 @@ namespace BuberDinner.Api.Controllers
     public class MenusController : ApiController
     {
         private readonly IMapper _mapper;
+        private readonly ISender _mediator;
 
-        public MenusController(IMapper mapper)
+        public MenusController(IMapper mapper, ISender mediator)
         {
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         [HttpPost]
-        public IActionResult CreateMenu(CreateMenuRequest request, string hostId)
+        public async Task<IActionResult> CreateMenu(CreateMenuRequest request, string hostId)
         {
-            //var command = _mapper.Map<CreateMenuCommand>((request, ))
+            var command = _mapper.Map<CreateMenuCommand>((request, hostId));
 
-            return Ok(request);
+            var createMenuResult = await _mediator.Send(command);
+
+            return createMenuResult.Match(
+                menu => Ok(_mapper.Map<MenuResponse>(menu)),
+                errors => Problem(errors)
+            );
         }
     }
 }
