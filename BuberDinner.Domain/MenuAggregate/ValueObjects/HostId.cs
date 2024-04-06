@@ -25,5 +25,10 @@ namespace BuberDinner.Domain.Menu.ValueObjects
         {
             return new HostId(Guid.Parse(value));
         }
+
+        public static HostId Create(Guid value)
+        {
+            return new HostId(value);
+        }
     }
 }
