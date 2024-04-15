@@ -8,7 +8,7 @@ using BuberDinner.Domain.MenuReview.ValueObjects;
 
 namespace BuberDinner.Domain.MenuAggregate
 {
-    public sealed class Menu : AggregateRoot<MenuId>
+    public sealed class Menu : AggregateRoot<MenuId, Guid>
     {
         //EF
         private Menu()
