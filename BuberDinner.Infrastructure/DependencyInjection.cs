@@ -28,7 +28,7 @@ namespace BuberDinner.Infrastructure
 
         public static IServiceCollection AddPersistance(this IServiceCollection services)
         {
-            services.AddDbContext<BuberDinnerDbContext>(options => options.UseSqlServer());
+            services.AddDbContext<BuberDinnerDbContext>(options => options.UseSqlServer("Server=localhost;Database=BuberDinner;User Id=sa;Password=78420gTT!;Encrypt=false"));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IMenuRepository, MenuRepository>();
 

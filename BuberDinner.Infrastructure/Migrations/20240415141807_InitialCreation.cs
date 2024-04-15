@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BuberDinner.Infrastructure.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,7 +18,7 @@ namespace BuberDinner.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     AverageRating_Value = table.Column<double>(type: "float", nullable: true),
                     AverageRating_NumRatings = table.Column<int>(type: "int", nullable: true),
-                    HostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    HostId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
