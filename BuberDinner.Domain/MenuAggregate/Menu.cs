@@ -1,10 +1,11 @@
 ﻿using BuberDinner.Domain.Common.Models;
 using BuberDinner.Domain.Common.ValueObjects;
-using BuberDinner.Domain.Dinner.ValueObjects;
+using BuberDinner.Domain.DinnerAggregate.ValueObjects;
 using BuberDinner.Domain.Menu.ValueObjects;
 using BuberDinner.Domain.MenuAggregate.Entities;
+using BuberDinner.Domain.MenuAggregate.Events;
 using BuberDinner.Domain.MenuAggregate.ValueObjects;
-using BuberDinner.Domain.MenuReview.ValueObjects;
+using BuberDinner.Domain.MenuReviewAggregate.ValueObjects;
 
 namespace BuberDinner.Domain.MenuAggregate
 {
@@ -15,7 +16,7 @@ namespace BuberDinner.Domain.MenuAggregate
         {
         }
 
-        public Menu(MenuId id, string name, string description, List<MenuSection> sections, HostId hostId) : base(id)
+        private Menu(MenuId id, string name, string description, List<MenuSection> sections, HostId hostId) : base(id)
         {
             _sections = sections;
             HostId = hostId;
@@ -40,7 +41,11 @@ namespace BuberDinner.Domain.MenuAggregate
 
         public static Menu Create(HostId hostId, string name, string description, List<MenuSection>? sections)
         {
-            return new Menu(MenuId.CreateUnique(), name, description, sections, hostId);
+            var menu = new Menu(MenuId.CreateUnique(), name, description, sections, hostId);
+
+            menu.AddDomainEvent(new MenuCreated(menu));
+            
+            return menu;
         }
     }
 }

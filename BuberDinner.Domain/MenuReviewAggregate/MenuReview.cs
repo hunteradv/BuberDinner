@@ -1,9 +1,9 @@
 ﻿using BuberDinner.Domain.Common.Models;
-using BuberDinner.Domain.MenuReview.ValueObjects;
+using BuberDinner.Domain.MenuReviewAggregate.ValueObjects;
 
 namespace BuberDinner.Domain.MenuReview
 {
-    internal class MenuReview : AggregateRoot<MenuReviewId>
+    internal class MenuReview : AggregateRoot<MenuReviewId, Guid>
     {
         public MenuReview(MenuReviewId id) : base(id)
         {

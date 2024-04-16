@@ -1,8 +1,8 @@
 ﻿using BuberDinner.Domain.Common.Models;
 
-namespace BuberDinner.Domain.MenuReview.ValueObjects
+namespace BuberDinner.Domain.MenuReviewAggregate.ValueObjects
 {
-    public class MenuReviewId : ValueObject
+    public class MenuReviewId : AggregateRootId<Guid>
 
     {
         public MenuReviewId(Guid value)
@@ -10,7 +10,7 @@ namespace BuberDinner.Domain.MenuReview.ValueObjects
             Value = value;
         }
 
-        public Guid Value { get; }
+        public sealed override Guid Value { get; protected set; }
 
         public static MenuReviewId CreateUnique()
         {

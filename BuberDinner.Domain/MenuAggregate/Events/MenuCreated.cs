@@ -1,6 +1,3 @@
 ﻿namespace BuberDinner.Domain.MenuAggregate.Events;
 
-public class MenuCreated
-{
-    
-}
+public record MenuCreated(Menu Menu) : IDomainEvent;
